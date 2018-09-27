@@ -1,0 +1,36 @@
+defmodule Poker do
+  @doc"""
+  Play a poker game. 
+  This poker game comprises a deck of cards and hands with each five cards.
+  """
+
+  def play() do
+  deck = CardManager.generate_deck()
+
+  [hand1|deck]  = CardManager.generate_hand(deck)
+  [hand2|_deck] = CardManager.generate_hand(deck)
+
+  hand1_sorted = Sort.sort(hand1)
+  hand2_sorted = Sort.sort(hand2)
+
+  IO.puts "hand1:"
+  IO.inspect hand1_sorted
+  IO.puts "hand2:"
+  IO.inspect hand2_sorted
+  get_game_results(hand1_sorted, hand2_sorted)
+  #Score.show_winner(winner)
+  end
+
+  def get_game_results(hand1_sorted, hand2_sorted) do
+    results = %{
+      :game_results => {},
+      :hand1 => {hand1_sorted},
+      :hand2 => {hand2_sorted}
+    }
+    IO.puts "teststtst"
+
+    Map.put(results, :winner, Score.who_is_winner?(hand1_sorted, hand2_sorted))
+  end
+end
+Poker.play()
+
