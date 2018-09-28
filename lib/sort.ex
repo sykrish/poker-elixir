@@ -1,34 +1,47 @@
 defmodule Sort do
-  @doc"""
+  @moduledoc"""
     The Sort module contains 3 sorting algorithms: insertion, bubble, and selection.
-    Bubble sort is set as default. To enable a different sorting algorithm, comment and uncomment in sort(list) function.
-
-    ## Parameters:
-        - unorderd_list: unorderd list of numbers.
-
-    ## Output:
-        - orderd list: from lowest to highest.
+    Bubble sort is set as default. To enable a different sorting algorithm, comment and uncomment in sort(list) function, see # CHANGEME
 
   """
 
+  @type unsorted_list :: list()
+  @type sorted_list :: list()
+
+  @doc"""
+    Sort the given list of size n to an ascending list.
+    ## Input:
+        - unsorted_list: unsorted list of numbers.
+
+    ## Output:
+        - sorted list: from lowest to highest.
+
+    ## Example:
+        - input = [5, 1, 8 4]
+        - output = [1, 4, 5, 8]
+
+  """
+  @spec sort(unsorted_list) :: sorted_list
   def sort(list) when is_list(list) do
+    # CHANGEME
+
     #do_insertion_sort([], list)
-    bubble_sort(list, 0)
     #do_selection_sort(list, [])
+    bubble_sort(list, 0)
   end
 
 
   #Insertion sort
   #-------------------------------------------------------------------------
-  def do_insertion_sort(_sorted_list = [], _unsorted_list = [head|tail]), do: do_insertion_sort([head], tail)
-  def do_insertion_sort(sorted_list, _unsorted_list = [head|tail]), do: insert(head, sorted_list) |> do_insertion_sort(tail)
-  def do_insertion_sort(sorted_list, _unsorted_list = []), do: sorted_list
+  defp do_insertion_sort(_sorted_list = [], _unsorted_list = [head|tail]), do: do_insertion_sort([head], tail)
+  defp do_insertion_sort(sorted_list, _unsorted_list = [head|tail]), do: insert(head, sorted_list) |> do_insertion_sort(tail)
+  defp do_insertion_sort(sorted_list, _unsorted_list = []), do: sorted_list
 
-  def insert(elem, _sorted_list = []) do
+  defp insert(elem, _sorted_list = []) do
     [elem]
   end
 
-  def insert(elem, sorted_list) do
+  defp insert(elem, sorted_list) do
     [min|rest] = sorted_list
     if min >= elem do [elem|[min|rest]] else [min|insert(elem, rest)] end
   end
@@ -36,29 +49,31 @@ defmodule Sort do
 
   #Bubble sort
   #-------------------------------------------------------------------------
-  def do_bubble_sort([head | [ second | tail ]]) when tail != [ ] and head >= second, do: [ second | do_bubble_sort([head|tail])]
-  def do_bubble_sort([head | [ second | tail ]]) when tail != [ ] and head <  second, do: [ head | do_bubble_sort([second|tail])]
-  def do_bubble_sort([head | [ second | _tail ]]) when head >= second, do: [second | [head | [ ] ]]
-  def do_bubble_sort([head | [ second | _tail ]]) when head <  second, do: [head | [second | [ ] ]]
+  defp do_bubble_sort([head | [ second | tail ]]) when tail != [ ] and head >= second, do: [ second | do_bubble_sort([head|tail])]
+  defp do_bubble_sort([head | [ second | tail ]]) when tail != [ ] and head <  second, do: [ head | do_bubble_sort([second|tail])]
+  defp do_bubble_sort([head | [ second | _tail ]]) when head >= second, do: [second | [head | [ ] ]]
+  defp do_bubble_sort([head | [ second | _tail ]]) when head <  second, do: [head | [second | [ ] ]]
 
-  def bubble_sort(list, accumulator) when accumulator < length(list), do: bubble_sort(do_bubble_sort(list), (accumulator + 1))
-  def bubble_sort(list, _), do: list
+  @spec bubble_sort([unsorted_list], integer) :: [sorted_list]
+  defp bubble_sort(list, accumulator) when accumulator < length(list), do: bubble_sort(do_bubble_sort(list), (accumulator + 1))
+  defp bubble_sort(list, _), do: list
 
 
   #Selection sort
   #-------------------------------------------------------------------------
-  def do_selection_sort([head|[]], orderd_list), do: orderd_list ++ [head]
+  defp do_selection_sort([head|[]], sorted_list), do: sorted_list ++ [head]
 
-  def do_selection_sort(unorderd_list, orderd_list) do
-    min = find_minimum(unorderd_list)
-    do_selection_sort(List.delete(unorderd_list, min), orderd_list ++ [min])
+  @spec do_selection_sort([unsorted_list], [sorted_list]) :: [sorted_list]
+  defp do_selection_sort(unsorted_list, sorted_list) do
+    min = find_minimum(unsorted_list)
+    do_selection_sort(List.delete(unsorted_list, min), sorted_list ++ [min])
   end
 
-  def find_minimum([head|[second|tail]]) when head <= second, do: find_minimum([head|tail])
-  def find_minimum([head|[second|tail]]) when head > second, do: find_minimum([second|tail])
-  def find_minimum([head|[second|[]]]) when head <= second, do: head 
-  def find_minimum([head|[second|[]]]) when head > second, do: second 
-  def find_minimum([head|[]]), do: head 
+  defp find_minimum([head|[second|tail]]) when head <= second, do: find_minimum([head|tail])
+  defp find_minimum([head|[second|tail]]) when head > second, do: find_minimum([second|tail])
+  defp find_minimum([head|[second|[]]]) when head <= second, do: head 
+  defp find_minimum([head|[second|[]]]) when head > second, do: second 
+  defp find_minimum([head|[]]), do: head 
 
 end
 

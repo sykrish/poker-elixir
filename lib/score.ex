@@ -1,22 +1,30 @@
 defmodule Score do
-  @doc"""
+  @moduledoc"""
   The Score module looks at both hands and determins the winner.
   To use the Score module, use the who_is_winner?(hand1, hand2) function.
+  """
+
+
+  @doc"""
   Return value from who_is_winner? are {winner = {winning_hand, winning_value*}, {score, score_related_cards}}.
   * = When hands have equal score, the winner is based on the highest pair / card.
 
+  ## Input
+        - hand1 and hand2: both sorted and comprises of five cards.
 
-  # Input
-    - hand1 and hand2: both sorted and comprises of five cards.
-
-  # Ouput
-    - Tuple containing: {{winner, won_with}, {score, cards}} 
-      -winner: hand1 or hand2
-      -winning_value: the actual cards or score that made the hand win
-      -score: a tuple containing the score and the related cards: {:pair, {6,6}}
-
+  ## Ouput
+        - Tuple containing: {{winner, won_with}, {score, cards}} 
+        - winner: hand1 or hand2
+        - winning_value: the actual cards or score that made the hand win
+        - score: a tuple containing the score and the related cards: {:pair, {6,6}}
   """
 
+  @type card :: {integer, String.t}
+  @type score :: {atom, {integer}}
+  @type winner :: {{atom, String.t}, score}
+
+
+  @spec who_is_winner?([card],[card]) :: winner
   def who_is_winner?(hand1, hand2) do
     score_hand1 = get_score(hand1)
     score_hand2 = get_score(hand2)
@@ -36,6 +44,7 @@ defmodule Score do
   end
 
 
+  @spec get_score([card]) :: score
   defp get_score([{value_a, suit}, {value_b, suit}, {value_c, suit}, {value_d, suit}, {value_e, suit}]) do
     if is_consecutive?(value_a, value_b, value_c ,value_d, value_e) do
       {:straight_flush, {value_a, value_b, value_c, value_d, value_e}}
@@ -73,7 +82,7 @@ defmodule Score do
 
   #Highest card
   defp get_score([{_value_a, _}, {_value_b_, _}, {_value_c_, _}, {_value_d, _}, {value_e, _}]), do: {:highcard, value_e}
-  defp get_score([]), do: {:error}
+  defp get_score([]), do: {:error, "Could not get score, list is empty"}
 
 
 
@@ -95,7 +104,7 @@ defmodule Score do
   def get_winner({score1, _cards1}, {score2, _cards2}, _hand1, _hand2), do: compare_score(score1, score2)
 
 
-  def compare_score(score1, score2) do
+  defp compare_score(score1, score2) do
     if(atom_to_value(score1) > atom_to_value(score2)) do
         {:hand1, score1}
      else
@@ -108,21 +117,21 @@ defmodule Score do
   defp who_has_highest_card?(hand1, hand2) do
     hand1_reversed = Enum.reverse(hand1)
     hand2_reversed = Enum.reverse(hand2)
-    find_highest_card(hand1_reversed, hand2_reversed)
+    find_highest_card_in_list(hand1_reversed, hand2_reversed)
   end
 
 
-  defp find_highest_card([ {card, _} | [ ] ], [{card, _} | [ ] ]), do: {:tie, "-"}
-  defp find_highest_card([ {card_hand1, _suit1} | rest_hand1], [ {card_hand2, _suit2} | rest_hand2] ) do
+  defp find_highest_card_in_list([ {card, _} | [ ] ], [{card, _} | [ ] ]), do: {:tie, "-"}
+  defp find_highest_card_in_list([ {card_hand1, _suit1} | rest_hand1], [ {card_hand2, _suit2} | rest_hand2] ) do
     cond do
       card_hand1 > card_hand2 -> {:hand1, card_hand1}
       card_hand1 < card_hand2 -> {:hand2, card_hand2}
-      card_hand1 == card_hand2 -> find_highest_card(rest_hand1, rest_hand2)
+      card_hand1 == card_hand2 -> find_highest_card_in_list(rest_hand1, rest_hand2)
     end
   end
-  defp find_highest_card([ card_hand1 | [ ] ], [ card_hand2 | [ ] ]) when card_hand1 > card_hand2, do: {:hand1, card_hand1}
-  defp find_highest_card([ card_hand1 | [ ] ], [ card_hand2 | [ ] ]) when card_hand1 < card_hand2, do: {:hand2, card_hand2}
-  defp find_highest_card( _hand1= [ ], _hand2 = [ ] ), do: :error
+  defp find_highest_card_in_list([ card_hand1 | [ ] ], [ card_hand2 | [ ] ]) when card_hand1 > card_hand2, do: {:hand1, card_hand1}
+  defp find_highest_card_in_list([ card_hand1 | [ ] ], [ card_hand2 | [ ] ]) when card_hand1 < card_hand2, do: {:hand2, card_hand2}
+  defp find_highest_card_in_list( _hand1= [ ], _hand2 = [ ] ), do: {:error, "Could not find highest card, lists are empty"}
 
 
   defp atom_to_value(:straight_flush),  do: 9

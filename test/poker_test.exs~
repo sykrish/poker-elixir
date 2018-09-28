@@ -1,6 +1,7 @@
 defmodule PokerTest do
   use ExUnit.Case, async: true
 
+
   describe "Poker" do
     @tag :results
     test "check game results" do
@@ -18,17 +19,19 @@ defmodule PokerTest do
         d5 = {13,  :hearts}
         hand2 = [d1, d2, d3, d4, d5]
 
-      assert Poker.get_map_of_game_results(hand1, hand2) == 
+      
+      winner = Score.who_is_winner?(hand1, hand2)
+      assert Poker.get_map_of_game_results(winner, hand1, hand2) == 
       %{
         :hand1 => hand1,
         :hand2 => hand2,
         :winner => :hand1,
-        :won_with => :pair,
+        :winning_value => :pair,
         :score => {:pair, {12,12}} 
       }
     end
 
-    @tag :results2
+    @tag :results
     test "check game results with tie" do
         c1 = {3, :clubs}
         c2 = {4, :hearts}
@@ -44,12 +47,13 @@ defmodule PokerTest do
         d5 = {14,  :hearts}
         hand2 = [d1, d2, d3, d4, d5]
 
-      assert Poker.get_map_of_game_results(hand1, hand2) == 
+      winner = Score.who_is_winner?(hand1, hand2)
+      assert Poker.get_map_of_game_results(winner, hand1, hand2) == 
       %{
         :hand1 => hand1,
         :hand2 => hand2,
         :winner => :tie,
-        :won_with => "-",
+        :winning_value => "-",
         :score => {:highcard, 14} 
       }
     end
@@ -68,11 +72,14 @@ defmodule PokerTest do
   end
 
 
+  # NOTE: To test the sorting algorithms, uncomment and comment in Score module at # CHANGEME 
   describe "Sort" do
+
   @tag :insertion
     test "sorting cards from lowest to highest" do
-      unorderd_list = [14, 4, 6, 2, 8]
-      assert Sort.sort(unorderd_list) == [2, 4, 6, 8, 14]
+      assert Sort.sort([5,1,8,4]) == [1,4,5,8]
+      assert Sort.sort([1,2,3,4]) == [1,2,3,4]
+      assert Sort.sort([5,2,2,4]) == [2,2,4,5]
     end
 
   @tag :bubble
@@ -125,7 +132,7 @@ defmodule PokerTest do
       d4 = {11, :clubs}
       d5 = {14, :heart}
       hand2 = [d1, d2, d3, d4, d5]
-      assert  Score.who_is_winner?(hand1, hand2) == :tie
+      assert  Score.who_is_winner?(hand1, hand2) == {{:tie, "-"}, {:highcard, 14}}
     end
 
 

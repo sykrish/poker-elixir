@@ -1,8 +1,9 @@
 defmodule Poker do
-  @doc"""
-    Play a poker game. 
+  @moduledoc"""
+    Start a poker game with the command: mix play. 
     This poker game comprises a deck of cards and hands with each five cards.
   """
+
 
   def play() do
     deck = Card.generate_deck()
@@ -18,9 +19,9 @@ defmodule Poker do
     show_results
   end
 
-
-  def get_map_of_game_results(results, hand1_sorted, hand2_sorted) do
-    {{winner, winning_value}, score} = results
+  @spec get_map_of_game_results(tuple(), list(), list()) :: map()
+  def get_map_of_game_results(winner, hand1_sorted, hand2_sorted) do
+    {{winner, winning_value}, score} = winner
     %{
       :hand1 => hand1_sorted,
       :hand2 => hand2_sorted,
@@ -30,7 +31,7 @@ defmodule Poker do
     }
   end
 
-
+  @spec show_results(map())  :: none()
   def show_results(results) do
     IO.puts "\nResults:"
     IO.puts "------------------------------------"

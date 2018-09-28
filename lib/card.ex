@@ -1,20 +1,24 @@
 defmodule Card do
-  @doc"""
-    Card creates a deck of 52 cards. This deck is used to create a set of cards called 'hand'.
+  @moduledoc"""
+    The Card module is used to create a deck of 52 cards.
+    The deck is used to create a set of cards called 'hand'.
     A card is removed from the deck when it is assigned to a hand.
     Cards are assigned randomly.
 
     Functions to use: 
     -  create_deck()
-    -  generate_hand(deck, hand, cards_left)
-    Initial call of generate_hand requires an empty Hand
-    cards_left is used since the function is recursive.
+    -  generate_hand(deck)
+
   """
+  @type card :: {integer, String.t}
+  @type hand :: [card]
+  @type deck :: [card]
 
   # return 'deck' as the cartesian product of 'values' and 'suits' .
+  @spec generate_deck() :: deck
   def generate_deck(), do: for values <- Enum.to_list(2..14), suits <- [:diamonds, :stars, :spades, :hearts], do: {values, suits}
 
-
+  @spec generate_hand(deck) :: hand
   def generate_hand(deck), do: generate_hand(deck, _hand = [ ],  _hand_size = 5)
 
   def generate_hand(deck, hand, cards_left) when cards_left > 0 do
