@@ -1,6 +1,23 @@
 defmodule PokerTest do
   use ExUnit.Case, async: true
 
+  @moduledoc"""
+  For each module there is a describe: Poker, Card, Score, Sort.
+  Available tags:
+       :results
+       :insertion
+       :bubble
+       :selection
+       :flush
+       :tie
+       :highest_card
+       :three_of_a_kind
+       :pair
+       :two_pair
+       :full_house
+       :four_of_a_kind
+  """
+
 
   describe "Poker" do
     @tag :results

@@ -2,6 +2,10 @@ defmodule Poker do
   @moduledoc"""
     Start a poker game with the command: mix play. 
     This poker game comprises a deck of cards and hands with each five cards.
+
+    Functions to use:
+    -   'Poker.play()/1'
+
   """
 
 

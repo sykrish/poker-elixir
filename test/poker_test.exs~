@@ -18,7 +18,6 @@ defmodule PokerTest do
         d4 = {10,  :spades}
         d5 = {13,  :hearts}
         hand2 = [d1, d2, d3, d4, d5]
-
       
       winner = Score.who_is_winner?(hand1, hand2)
       assert Poker.get_map_of_game_results(winner, hand1, hand2) == 

@@ -1,22 +1,24 @@
 defmodule Score do
   @moduledoc"""
-  The Score module looks at both hands and determins the winner.
-  To use the Score module, use the who_is_winner?(hand1, hand2) function.
+    The Score module looks at both hands and determins the winner.
+
+    Functions to use:
+    -   'Score.who_is_winner?(hand1, hand2)/1'
   """
 
 
   @doc"""
-  Return value from who_is_winner? are {winner = {winning_hand, winning_value*}, {score, score_related_cards}}.
-  * = When hands have equal score, the winner is based on the highest pair / card.
+    Return value from who_is_winner? are {winner = {winning_hand, winning_value*}, {score, score_related_cards}}.
+    * = When hands have equal score, the winner is based on the highest pair / card.
 
-  ## Input
-        - hand1 and hand2: both sorted and comprises of five cards.
+    ## Input
+          - hand1 and hand2: both sorted and comprises of five cards.
 
-  ## Ouput
-        - Tuple containing: {{winner, won_with}, {score, cards}} 
-        - winner: hand1 or hand2
-        - winning_value: the actual cards or score that made the hand win
-        - score: a tuple containing the score and the related cards: {:pair, {6,6}}
+    ## Ouput
+          - Tuple containing: {{winner, won_with}, {score, cards}} 
+          - winner: hand1 or hand2
+          - winning_value: the actual cards or score that made the hand win
+          - score: a tuple containing the score and the related cards: {:pair, {6,6}}
   """
 
   @type card :: {integer, String.t}

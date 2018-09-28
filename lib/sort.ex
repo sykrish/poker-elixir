@@ -5,11 +5,13 @@ defmodule Sort do
 
   """
 
-  @type unsorted_list :: list()
-  @type sorted_list :: list()
 
   @doc"""
     Sort the given list of size n to an ascending list.
+
+    Function to use:
+    -   'Sort.sort/1'
+
     ## Input:
         - unsorted_list: unsorted list of numbers.
 
@@ -21,6 +23,10 @@ defmodule Sort do
         - output = [1, 4, 5, 8]
 
   """
+
+  @type unsorted_list :: list()
+  @type sorted_list :: list()
+
   @spec sort(unsorted_list) :: sorted_list
   def sort(list) when is_list(list) do
     # CHANGEME

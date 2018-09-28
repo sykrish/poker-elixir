@@ -1,21 +1,22 @@
-# Poker
+# Poker - elixir
 
-**TODO: Add description**
+## Description 
+Play a poker game! 
+Two hands, each with both five cards play a game of poker. The hand with the highest score wins.
 
-## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `poker` to your list of dependencies in `mix.exs`:
+This project is written for an assignment.
 
-```elixir
-def deps do
-  [
-    {:poker, "~> 0.1.0"}
-  ]
-end
-```
+Poker is written in Elixir **v1.5**.
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/poker](https://hexdocs.pm/poker).
+## Usage
+To start the poker application you can use the following command in the terminal:
+> mix play
 
+For testing, use to command:
+> mix test
+
+
+
+## Notes
+The Sort module contains three sorting algorithms (bubble-sort, insertion-sort, and selection-sort) which can be changed manually.

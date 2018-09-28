@@ -6,15 +6,18 @@ defmodule Card do
     Cards are assigned randomly.
 
     Functions to use: 
-    -  create_deck()
-    -  generate_hand(deck)
+    -  'Card.generate_deck()/1'
+    -  'Card.generate_hand(deck)/1'
 
   """
   @type card :: {integer, String.t}
   @type hand :: [card]
   @type deck :: [card]
 
-  # return 'deck' as the cartesian product of 'values' and 'suits' .
+  @dos"""
+    Generate a deck of 52 unique cards.
+  """
+
   @spec generate_deck() :: deck
   def generate_deck(), do: for values <- Enum.to_list(2..14), suits <- [:diamonds, :stars, :spades, :hearts], do: {values, suits}
 
